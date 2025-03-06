@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vel Tech Attendance Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            width: 50%;
+            background: #1e1e1e;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+        h1 {
+            background: linear-gradient(90deg, #ff8c00, #ff0080);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 36px;
+        }
+        label {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        input {
+            width: 80%;
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            background: #333;
+            color: white;
+        }
+        button {
+            background: linear-gradient(90deg, #ff8c00, #ff0080);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎓 Vel Tech Attendance Calculator</h1>
+        <label>Total Sessions:</label><br>
+        <input type="number" id="total_hours" min="1"><br>
+        <label>Hours Present:</label><br>
+        <input type="number" id="hours_present" min="0"><br>
+        <label>Hours Absent:</label><br>
+        <input type="number" id="hours_absent" min="0"><br>
+        <button onclick="calculateAttendance()">Calculate Attendance</button>
+        <div class="result" id="result"></div>
+    </div>
+    <script>
+        function calculateAttendance() {
+            let totalHours = parseInt(document.getElementById("total_hours").value);
+            let hoursPresent = parseInt(document.getElementById("hours_present").value);
+            
+            if (isNaN(totalHours) || isNaN(hoursPresent) || totalHours < 1 || hoursPresent < 0) {
+                document.getElementById("result").innerHTML = "Please enter valid inputs.";
+                return;
+            }
+            
+            let attendancePercentage = (hoursPresent / totalHours) * 100;
+            let requiredHours = 0.75 * totalHours;
+            let classesNeeded = requiredHours - hoursPresent;
+            
+            let message = `<p>Your current attendance percentage is ${attendancePercentage.toFixed(2)}%.</p>`;
+            
+            if (attendancePercentage >= 75) {
+                message += "<p style='color:lightgreen;'>✅ You are eligible with sufficient attendance!</p>";
+            } else {
+                message += `<p style='color:red;'>⚠️ You need to attend ${Math.ceil(classesNeeded)} more classes to reach 75% attendance.</p>`;
+            }
+            
+            document.getElementById("result").innerHTML = message;
+        }
+    </script>
+</body>
+</html>
